@@ -202,7 +202,11 @@ namespace momdp
 
 			DEBUG_TRACE( cout << "currReward " << currReward << endl; );
 			expReward += mult*currReward;
-			mult *= gamma;
+      //multiply by gamma only for behaviour actions
+      if(currAction < 4)
+      {
+			  mult *= gamma;
+      }
 			reward += currReward;
 
 			DEBUG_TRACE( cout << "expReward " << expReward << endl; );
