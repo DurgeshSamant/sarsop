@@ -150,6 +150,7 @@ namespace momdp
 		unsigned int firstAction;
 
 		double gamma = problem->getDiscount();
+    gamma=1;
 		for(int timeIter = 0; timeIter < iters; timeIter++)
 		{ 
 			DEBUG_TRACE( cout << "timeIter " << timeIter << endl; );
@@ -202,11 +203,7 @@ namespace momdp
 
 			DEBUG_TRACE( cout << "currReward " << currReward << endl; );
 			expReward += mult*currReward;
-      //multiply by gamma only for behaviour actions
-      if(currAction < 4)
-      {
-			  mult *= gamma;
-      }
+			mult *= gamma;
 			reward += currReward;
 
 			DEBUG_TRACE( cout << "expReward " << expReward << endl; );

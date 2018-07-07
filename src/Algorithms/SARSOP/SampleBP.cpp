@@ -120,7 +120,8 @@ namespace momdp
 			nextNodeTargetUbArr[currentRoot] = lbVal;
 		}
 
-		double finalExcess = ubVal - lbVal - (trialTargetPrecisionArr[currentRoot] * 0.5 * pow (problem->getDiscount (), -depthArr[currentRoot]));
+		//double finalExcess = ubVal - lbVal - (trialTargetPrecisionArr[currentRoot] * 0.5 * pow (problem->getDiscount (), -depthArr[currentRoot]));
+		double finalExcess = ubVal - lbVal - (trialTargetPrecisionArr[currentRoot] * 0.5 * pow (1.0, -depthArr[currentRoot]));
 
 		DEBUG_TRACE( cout << "SampleBP::sample finalExcess " << finalExcess << endl; );
 
@@ -137,7 +138,8 @@ namespace momdp
 		else
 		{
 			//initialize checking variables----------------------
-			double expectedError = trialTargetPrecisionArr[currentRoot]  * pow (problem->getDiscount (), -depthArr[currentRoot]);
+			//double expectedError = trialTargetPrecisionArr[currentRoot]  * pow (problem->getDiscount (), -depthArr[currentRoot]);
+			double expectedError = trialTargetPrecisionArr[currentRoot]  * pow (1.0, -depthArr[currentRoot]);
 			excessUncertainty = ubVal - lbVal - expectedError;
 			double curTargetUb = max (nextNodeTargetUbArr[currentRoot], lbVal + expectedError);
 
@@ -286,7 +288,8 @@ cout << " | child.sval : " << newIndexRow.sval << ".row " << newIndexRow.row << 
 				//double curUb = bounds->upperBoundBVpair->getValue (currentNode.getNextState (i, j).s);
 				solver->beliefCacheSet[newIndexRow.sval]->getRow(newIndexRow.row)->UB = curUb; // beliefCache->getRow(newRow)->UB = curUb;
 				// 061008 changed calculation for obsProb
-				nextNodeTargetUbArr[currentRoot] = ((curTargetUb - currentNode.Q[i].immediateReward) / problem->getDiscount() - futureValue) / (Qa.stateOutcomes[Xn]->outcomes[j]->obsProb) ;
+				//nextNodeTargetUbArr[currentRoot] = ((curTargetUb - currentNode.Q[i].immediateReward) / problem->getDiscount() - futureValue) / (Qa.stateOutcomes[Xn]->outcomes[j]->obsProb) ;
+				nextNodeTargetUbArr[currentRoot] = ((curTargetUb - currentNode.Q[i].immediateReward) / 1.0 - futureValue) / (Qa.stateOutcomes[Xn]->outcomes[j]->obsProb) ;
 				//nextNodeTargetUb = ((curTargetUb - currentNode.Q[i].immediateReward) / problem->getDiscount() - futureValue) / (Qa.stateOutcomes[Xn]->outcomes[j]->obsProb * Qa.stateOutcomes[Xn]->obsStateProb) ;
 				// the above takes the place of this
 				//nextNodeTargetUb = ((curTargetUb - currentNode.Q[i].immediateReward) / problem->getDiscount() - futureValue) / Qa.stateOutcomes[Xn]->outcomes[j]->obsProb;
@@ -354,7 +357,8 @@ cout << "End of one trial due to !( (currentNode.Q[i].ubVal == CB_QVAL_UNDEFINED
 					ubVal =	solver->beliefCacheSet[sn.cacheIndex.sval]->getRow(sn.cacheIndex.row)->UB;
 					// 26092008 corrected multiplication factor, prevly: e->obsProb
 					// 061008 changed calculation for obsProb
-					width =	e->obsProb * (ubVal - lbVal - trialTargetPrecisionArr[currentRoot] * pow (problem->getDiscount (), -(depthArr[currentRoot] + 1)));//targetPrecision VS trialTargetPrecision ??
+					//width =	e->obsProb * (ubVal - lbVal - trialTargetPrecisionArr[currentRoot] * pow (problem->getDiscount (), -(depthArr[currentRoot] + 1)));//targetPrecision VS trialTargetPrecision ??
+					width =	e->obsProb * (ubVal - lbVal - trialTargetPrecisionArr[currentRoot] * pow (1.0, -(depthArr[currentRoot] + 1)));//targetPrecision VS trialTargetPrecision ??
 					//width =	e->obsProb * Qax->obsStateProb * (ubVal - lbVal - trialTargetPrecision * pow (problem->getDiscount (), -(depth + 1)));//targetPrecision VS trialTargetPrecision ??
 					if (width > r.maxExcessUnc)
 					{
@@ -395,7 +399,8 @@ cout << "End of one trial due to !( (currentNode.Q[i].ubVal == CB_QVAL_UNDEFINED
 					ubVal =	solver->beliefCacheSet[sn.cacheIndex.sval]->getRow(sn.cacheIndex.row)->UB;
 					// 26092008 corrected multiplication factor, prevly: e->obsProb
 					// 061008 changed calculation for obsProb
-					width =	e->obsProb * (ubVal - lbVal - trialTargetPrecisionArr[currentRoot] * pow (problem->getDiscount (), -(depthArr[currentRoot] + 1)));//targetPrecision VS trialTargetPrecision ??
+					//width =	e->obsProb * (ubVal - lbVal - trialTargetPrecisionArr[currentRoot] * pow (problem->getDiscount (), -(depthArr[currentRoot] + 1)));//targetPrecision VS trialTargetPrecision ??
+					width =	e->obsProb * (ubVal - lbVal - trialTargetPrecisionArr[currentRoot] * pow (1.0, -(depthArr[currentRoot] + 1)));//targetPrecision VS trialTargetPrecision ??
 					//width =	e->obsProb * Qax->obsStateProb * (ubVal - lbVal - trialTargetPrecision * pow (problem->getDiscount (), -(depth + 1)));//targetPrecision VS trialTargetPrecision ??
 						if (width >= (max_excess - 0.5*1e-9) ) {
 							observations[index] = o;
@@ -482,7 +487,7 @@ cout << "End of one trial due to !( (currentNode.Q[i].ubVal == CB_QVAL_UNDEFINED
 		/* problem->getObsProbVector(opv, currentNode.s, action, xstate);
 		value = sum_o + (opv(observation) * bm->getBinValue( currentNode.getNextState (action, observation, xstate).cacheIndex )); */
 
-		value *= problem->getDiscount();
+		//value *= problem->getDiscount();
 		value += currentNode.Q[action].immediateReward;
 		
 		double curTargetLb;
@@ -495,7 +500,8 @@ cout << "End of one trial due to !( (currentNode.Q[i].ubVal == CB_QVAL_UNDEFINED
 			curTargetLb = max(maxValue, nextNodeTargetLbArr[currentRoot]);
 		}
 
-		nextNodeTargetLbArr[currentRoot] = ((curTargetLb - currentNode.Q[action].immediateReward) / problem->getDiscount() - sum_o) / oxp;
+		//nextNodeTargetLbArr[currentRoot] = ((curTargetLb - currentNode.Q[action].immediateReward) / problem->getDiscount() - sum_o) / oxp;
+		nextNodeTargetLbArr[currentRoot] = ((curTargetLb - currentNode.Q[action].immediateReward) / 1.0 - sum_o) / oxp;
 		//nextNodeTargetLb = ((curTargetLb - currentNode.Q[action].immediateReward) / problem->getDiscount() - sum_o) / opv(observation);
 
 		return (value > curTargetLb);
@@ -518,7 +524,7 @@ cout << "End of one trial due to !( (currentNode.Q[i].ubVal == CB_QVAL_UNDEFINED
 				}
 			}
 		}
-		value *= problem->getDiscount();
+		//value *= problem->getDiscount();
 		value += currentNode.Q[action].immediateReward;
 		return value;
 	}

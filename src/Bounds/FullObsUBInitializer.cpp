@@ -33,7 +33,7 @@ namespace momdp {
 	{
 		DenseVector R_xa;
 		mult(result, *(*(pomdp->pomdpT))[a], alpha); // SYL040909 prevly mult( result, alpha, *(*(pomdp->pomdpTtr))[a] ); The current function call mult(result, matrix, vector) seems faster
-		result *= pomdp->discount;
+		//result *= pomdp->discount;
 		copy_from_column( R_xa, *(pomdp->pomdpR), a );
 		result += R_xa;
 	}
@@ -101,7 +101,7 @@ namespace momdp {
 	{
 		DenseVector R_xa;
 		mult( result, actionAlphas[a], *(*(pomdp->pomdpTtr))[a] );
-		result *= pomdp->discount;
+		//result *= pomdp->discount;
 		copy_from_column( R_xa, *(pomdp->pomdpR), a );
 		result += R_xa;
 	}
@@ -199,7 +199,7 @@ namespace momdp {
                             resultSum += resultThisState;
                         }
 
-			resultSum *= pomdp->discount;
+			//resultSum *= pomdp->discount;
 			copy_from_column( R_xa, *pomdp->rewards->getMatrix(state_idx), a );
 			resultSum += R_xa;
 			resultByState[state_idx] = resultSum;
@@ -303,7 +303,7 @@ namespace momdp {
 
                         }
 
-			resultSum *= pomdp->discount;
+			//resultSum *= pomdp->discount;
 			copy_from_column( R_xa, *pomdp->rewards->getMatrix(state_idx), a );
 			resultSum += R_xa;
 			resultByState[state_idx] = resultSum;

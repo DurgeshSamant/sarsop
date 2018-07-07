@@ -200,7 +200,7 @@ namespace momdp
         unsigned int firstAction;
 
         double gamma = problem->getDiscount();
-
+        gamma = 1.0;
         int xDim = 3;
         vector<int> bhout(xDim,0);
         vector<int> fhout(xDim,0);
@@ -273,11 +273,7 @@ namespace momdp
 
             DEBUG_TRACE( cout << "currReward " << currReward << endl; );
             expReward += mult*currReward;
-            //Multiply by gamma only for behaviour actions
-            if(currAction <4)
-            {
-              mult *= gamma;
-            }
+            mult *= gamma;
             reward += currReward;
 
             DEBUG_TRACE( cout << "expReward " << expReward << endl; );

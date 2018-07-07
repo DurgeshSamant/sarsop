@@ -45,7 +45,8 @@ Problem_Type gProblemType = UNKNOWN_problem_type;
 
 /* The discount factor to be used with the problem.  
 */
-REAL_VALUE gDiscount = DEFAULT_DISCOUNT_FACTOR;
+//REAL_VALUE gDiscount = DEFAULT_DISCOUNT_FACTOR;
+REAL_VALUE gDiscount = 1.0;
 
 char *value_type_str[] = VALUE_TYPE_STRINGS;
 

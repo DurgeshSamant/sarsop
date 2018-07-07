@@ -213,6 +213,7 @@ namespace momdp {
 		numActions = p.getNumActions();
 		numObservations = p.getNumObservations();
 		discount = p.getDiscount();
+    discount = 1;
 
 // 		cout << "Number of States :: " << numStates << endl;
 		cout << "input file   : " << fileName << endl;

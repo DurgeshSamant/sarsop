@@ -11,7 +11,8 @@ MOMDP::MOMDP(void) : initialBeliefY(new SparseVector()), initialBeliefStval(new 
 {
     beliefTransition = new BeliefTransitionMOMDP();
     beliefTransition->problem =dynamic_pointer_cast<MObject>( SharedPointer<MOMDP>(this));
-    discount = 0.95;
+    //discount = 0.95;
+    discount = 1;
 
 
     XStates = new States();
@@ -243,7 +244,8 @@ SharedPointer<MOMDP> MOMDP::convertMOMDPFromPOMDP(POMDP* pomdpProblem)
     StateTransitionXY* XYTrans = new StateTransitionXY();
     result->YTrans = XYTrans;
 
-    result->discount = pomdpProblem->discount;
+    //result->discount = pomdpProblem->discount;
+    result->discount = 1.0;
 
     // States
     {
@@ -427,7 +429,8 @@ SharedPointer<MOMDP> MOMDP::convertMOMDPFromPOMDPX(FactoredPomdp* factoredPomdp,
 	numActions = layerPtr->numActions;
 	numObservations = layerPtr->numObservations;
 
-	result->discount = layerPtr->discount;
+	//result->discount = layerPtr->discount;
+	result->discount = 1.0;
 
 	// SYL0409809 this code seems redundant
 	/* R = layerPtr->R;
@@ -501,7 +504,8 @@ SharedPointer<MOMDP> MOMDP::convertMOMDPFromPOMDPX(FactoredPomdp* factoredPomdp,
 
 	numActions = layerPtr->pomdpNumActions;   // numActions = layerPtr->numActions;
 	numObservations = layerPtr->pomdpNumObservations; // numObservations = layerPtr->numObservations;
-	result->discount = layerPtr->pomdpDiscount;  //discount = layerPtr->discount; 
+	//result->discount = layerPtr->pomdpDiscount;  //discount = layerPtr->discount; 
+	result->discount = 1.0;  //discount = layerPtr->discount; 
 
 	//isPOMDPTerminalState.resize(numStatesObs);
 	//isPOMDPTerminalState = layerPtr->isPOMDPTerminalState;
@@ -620,7 +624,8 @@ SharedPointer<MOMDP> MOMDP::convertMOMDPFromPOMDPX(FactoredPomdp* factoredPomdp,
 
 	numActions = layerPtr->pomdpNumActions;   
 	numObservations = layerPtr->pomdpNumObservations; 
-	result->discount = layerPtr->pomdpDiscount;  
+	//result->discount = layerPtr->pomdpDiscount;  
+	result->discount = 1.0;  
 
 	result->initialBeliefY->resize(1);
 	result->initialBeliefY->push_back(0,1);

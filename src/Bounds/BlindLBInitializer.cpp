@@ -82,8 +82,9 @@ namespace momdp {
 
 
 		DenseVector worstCaseDVector(numStatesObs*numStatesUnobs);
-		assert(pomdp->getDiscount() < 1);
-		double worstCaseLongTerm = worstCaseReward / (1 - pomdp->getDiscount());
+		//assert(pomdp->getDiscount() < 1);
+		//double worstCaseLongTerm = worstCaseReward / (1 - pomdp->getDiscount());
+		double worstCaseLongTerm = worstCaseReward / (1 - 0.9999);
 		FOR (i, numStatesObs*numStatesUnobs) 
 		{
 			worstCaseDVector(i) = worstCaseLongTerm;
@@ -149,7 +150,7 @@ namespace momdp {
 //				DEBUG_TRACE(nextAl.write(cout) << endl; );
 				
 				//     mult(nextAl, pomdp->pomdpT[a], al);
-				nextAl *= pomdp->discount;
+				//nextAl *= pomdp->discount;
 				
 //				DEBUG_TRACE(cout << "nextAl " << endl; );
 //				DEBUG_TRACE(nextAl.write(cout) << endl; );
@@ -256,7 +257,7 @@ namespace momdp {
 		int numStatesObs = pomdp->XStates->size();
 
 		double worstCaseLongTerm; 
-		assert(pomdp->getDiscount() < 1);
+		//assert(pomdp->getDiscount() < 1);
 
 		FOR (sval, numStatesObs) 
 		{	
@@ -313,8 +314,9 @@ namespace momdp {
 			if (penultimateTerminal) {
 				worstCaseLongTerm = worstCaseReward;
 			} else {
-				assert(pomdp->getDiscount() < 1);
-				worstCaseLongTerm = worstCaseReward / (1 - pomdp->getDiscount());
+				//assert(pomdp->getDiscount() < 1);
+				//worstCaseLongTerm = worstCaseReward / (1 - pomdp->getDiscount());
+				worstCaseLongTerm = worstCaseReward / (1 - 0.9999);
 			}
 
 // OR, OPTION B
@@ -376,8 +378,9 @@ namespace momdp {
 
 		double worstCaseLongTerm; 
 
-		assert(pomdp->getDiscount() < 1);
-		worstCaseLongTerm = worstCaseReward / (1 - pomdp->getDiscount());
+		//assert(pomdp->getDiscount() < 1);
+		//worstCaseLongTerm = worstCaseReward / (1 - pomdp->getDiscount());
+		worstCaseLongTerm = worstCaseReward / (1 - 0.9999);
 
 		FOR (sval, numStatesObs)
 		{
@@ -456,7 +459,7 @@ namespace momdp {
                                             tmpAl += tmpNextAl1;
                                         }
 
-					tmpAl *= pomdp->discount;
+					//tmpAl *= pomdp->discount;
 
 					copy_from_column(tmp, *(pomdp->rewards->getMatrix(sval)), a);
 					tmpAl += tmp;
