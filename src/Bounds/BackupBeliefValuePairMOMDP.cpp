@@ -88,8 +88,11 @@ double BackupBeliefValuePairMOMDP::getNewUBValueQ(BeliefTreeNode& cn, int a)
 			}
 		}
 	}
-
+  
 	val = Qa.immediateReward + problem->getDiscount() * val; 
+  if (a>=4){
+	  val = Qa.immediateReward + 1.0 * val; 
+  }
 	DEBUG_TRACE( cout << "val " << val << endl; );
 	Qa.ubVal = val;
 

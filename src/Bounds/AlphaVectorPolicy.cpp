@@ -295,7 +295,9 @@ int AlphaVectorPolicy::getBestActionLookAhead(BeliefWithState& b, REAL_VALUE& ma
 				}
 			}
 		} 
+    if(a<4){
 		sum *= problem->getDiscount();
+    }
 		sum += immediateReward;
 
 		DEBUG_TRACE( cout << "sum " << sum << endl; );
@@ -399,7 +401,10 @@ int AlphaVectorPolicy::getBestActionLookAhead(std::vector<belief_vector>& belYs,
 			actionValue += observationValue;
 		}
 		// after exiting observation loop, multiply observationValue by discount factor and add to R(b,a)
-		actionValue = problem->getDiscount() * actionValue;
+    if( a < 4)
+    {
+		  actionValue = problem->getDiscount() * actionValue;
+    }
 
 		FOR (xc, problem->XStates->size())
 		{
@@ -519,8 +524,9 @@ int AlphaVectorPolicy::getBestActionLookAhead(SharedPointer<belief_vector>& belY
 			actionValue += observationValue;
 		}
 		// after exiting observation loop, multiply observationValue by discount factor and add to R(b,a)
+    if(a<4){
 		actionValue = problem->getDiscount() * actionValue;
-
+    }
 		FOR (xc, problem->XStates->size())
 		{
 			if (!(belX(xc) == 0)) 
@@ -606,8 +612,12 @@ int AlphaVectorPolicy::getBestActionLookAhead_alternative(std::vector<belief_vec
 						}
 					}
 				}
-
+        if(a<4){
 				xValue = problem->rewards->getReward(*currStB, a) + problem->getDiscount() * xValue;
+        }
+        else{
+				xValue = problem->rewards->getReward(*currStB, a) + xValue;
+        }
 				actionValue += (belX(xc) * xValue); 
 			}
 		}
@@ -686,8 +696,12 @@ int AlphaVectorPolicy::getBestActionLookAhead_alternative(SharedPointer<belief_v
 						}
 					}
 				}
-
+        if(a<4){
 				xValue = problem->rewards->getReward(*currStB, a) + problem->getDiscount() * xValue;
+        }
+        else{
+				xValue = problem->rewards->getReward(*currStB, a) + 1.0 * xValue;
+        }
 				actionValue += (belX(xc) * xValue); 
 			}
 		}

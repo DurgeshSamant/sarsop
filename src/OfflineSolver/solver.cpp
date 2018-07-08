@@ -389,7 +389,9 @@ int MDPSolution(SharedPointer<MOMDP> problem, SolverParams* p)
 			sum += childLB * sprob;
 		    }
 		}
+    if(a<4){
 		sum *= problem->getDiscount();
+    }
 		sum += immediateReward;
 
 		if(sum > maxActionLB)
