@@ -149,7 +149,10 @@ namespace momdp {
 //				DEBUG_TRACE(nextAl.write(cout) << endl; );
 				
 				//     mult(nextAl, pomdp->pomdpT[a], al);
+        if(a>=0 && a<4)
+        {
 				nextAl *= pomdp->discount;
+        }
 				
 //				DEBUG_TRACE(cout << "nextAl " << endl; );
 //				DEBUG_TRACE(nextAl.write(cout) << endl; );
@@ -456,7 +459,9 @@ namespace momdp {
                                             tmpAl += tmpNextAl1;
                                         }
 
+          //if(a>=0 && a<4){ //Causes SARSOP to go into infinite loop while initializing blindly. 
 					tmpAl *= pomdp->discount;
+          //}
 
 					copy_from_column(tmp, *(pomdp->rewards->getMatrix(sval)), a);
 					tmpAl += tmp;

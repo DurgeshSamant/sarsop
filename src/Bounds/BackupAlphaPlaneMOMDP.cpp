@@ -134,7 +134,9 @@ double BackupAlphaPlaneMOMDP::getNewAlphaPlane(AlphaPlane& result, BeliefTreeNod
 					}
 				}
 			}
+      if(a>=0 && a<4){
 			sum *= problem->getDiscount();
+      }
 			sum += cn.Q[a].immediateReward;
 			cn.Q[a].lbVal = sum;
 			DEBUG_TRACE( cout << "sum " << sum << endl; );
@@ -248,7 +250,10 @@ void BackupAlphaPlaneMOMDP::getNewAlphaPlaneQ(AlphaPlane& result, const BeliefTr
 
 
 	copy_from_column( RaXc, *(problem->rewards->getMatrix(Xc)), a );
+  if(a>=0 && a<4)
+  {
 	(*betaA) *= problem->getDiscount();
+  }
 	(*betaA) += RaXc;
 
 	result.copyFrom(betaA, a, Xc);
