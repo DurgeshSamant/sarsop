@@ -286,7 +286,7 @@ cout << " | child.sval : " << newIndexRow.sval << ".row " << newIndexRow.row << 
 				//double curUb = bounds->upperBoundBVpair->getValue (currentNode.getNextState (i, j).s);
 				solver->beliefCacheSet[newIndexRow.sval]->getRow(newIndexRow.row)->UB = curUb; // beliefCache->getRow(newRow)->UB = curUb;
 				// 061008 changed calculation for obsProb
-        if(i<4){
+        if(i>=0 && i<4){
 				nextNodeTargetUbArr[currentRoot] = ((curTargetUb - currentNode.Q[i].immediateReward) / problem->getDiscount() - futureValue) / (Qa.stateOutcomes[Xn]->outcomes[j]->obsProb) ;
         }
         else{
@@ -487,7 +487,7 @@ cout << "End of one trial due to !( (currentNode.Q[i].ubVal == CB_QVAL_UNDEFINED
 		/* problem->getObsProbVector(opv, currentNode.s, action, xstate);
 		value = sum_o + (opv(observation) * bm->getBinValue( currentNode.getNextState (action, observation, xstate).cacheIndex )); */
 
-    if(action<4){
+    if(action>=0 && action<4){
 		value *= problem->getDiscount();
     }
 		value += currentNode.Q[action].immediateReward;
@@ -502,7 +502,7 @@ cout << "End of one trial due to !( (currentNode.Q[i].ubVal == CB_QVAL_UNDEFINED
 			curTargetLb = max(maxValue, nextNodeTargetLbArr[currentRoot]);
 		}
 
-    if(action <4)
+    if(action>=0 && action <4)
     {
 		nextNodeTargetLbArr[currentRoot] = ((curTargetLb - currentNode.Q[action].immediateReward) / problem->getDiscount() - sum_o) / oxp;
     }
@@ -531,7 +531,7 @@ cout << "End of one trial due to !( (currentNode.Q[i].ubVal == CB_QVAL_UNDEFINED
 				}
 			}
 		}
-    if(action<4){
+    if(action>=0 && action<4){
 		value *= problem->getDiscount();
     }
 		value += currentNode.Q[action].immediateReward;

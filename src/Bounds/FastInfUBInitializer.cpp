@@ -161,9 +161,7 @@ namespace momdp {
 					beta_a += beta_ao;
 				}
 
-        if(a<4){
 				beta_a *= pomdp->discount;
-        }
 				copy_from_column( tmp, (*(pomdp->pomdpR)), a );
 				//     copy_from_column( tmp, pomdp->pomdpR, a );
 				beta_a += tmp;
@@ -416,9 +414,7 @@ namespace momdp {
 							beta_a[Xc] += beta_ao; //beta_ao;
 
 					}
-          if (a<4){
 					beta_a[Xc] *= pomdp->discount;
-          }
 					
 					copy_from_column( tmp, *pomdp->rewards->getMatrix(Xc), a );
 					beta_a[Xc] += tmp;
